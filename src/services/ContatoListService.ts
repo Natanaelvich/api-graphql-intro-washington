@@ -1,3 +1,4 @@
+import AppError from '@/errors/AppError';
 import db from '../db';
 
 class ContatoListService {
@@ -5,14 +6,24 @@ class ContatoListService {
     this.db = db;
   }
 
-  async findAll() {
-    return await db('contatos');
+  async findAll(user_id: number) {
+    const contatos = await db('contatos').where('user_id', user_id);
+    return contatos;
   }
-  async findOne({ id }) {
-    return await db('contatos').where('id', id)[0];
+
+  async findOne({ id }: { id: number }) {
+    const contato = await db('contatos').where('id', id);
+
+    if (contato.length === 0) {
+      throw new AppError('Tarefa não encontrada');
+    }
+
+    return contato;
   }
-  async findByUser(user) {
-    return await db('contatos').where('user_id', user.id);
+
+  async findByUser(user: { id: number }) {
+    const contatos = await db('contatos').where('user_id', user.id);
+    return contatos;
   }
 }
 
