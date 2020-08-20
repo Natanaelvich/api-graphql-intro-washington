@@ -21,8 +21,8 @@ class ContatoListService {
     return contato;
   }
 
-  async findByUser(user: { id: number }) {
-    const contatos = await db('contatos').where('user_id', user.id);
+  async findByUser(user_id) {
+    const contatos = await db('contatos').where({ user_id });
     return contatos;
   }
 }
