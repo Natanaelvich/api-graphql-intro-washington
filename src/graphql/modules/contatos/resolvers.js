@@ -1,35 +1,20 @@
-import db from '../../../db';
-
 export default {
   Query: {
-    contatos: async () => await db('contatos'),
-    contato: (_, { id }) => {},
+    contatos: async (_, __, context) => {
+      return await context.contatoListService.findAll();
+    },
+    contato: async (_, { id }, context) =>
+      await context.contatoListService.findOne({ id }),
   },
   Mutation: {
-    createContato: async (_, { data }) => {
-      const contatoExists = await db('contatos').where({
-        email: data.email,
-      });
-
-      if (contatoExists.length > 0) {
-        throw new Error(`contato with email ${data.email} already exists`);
-      }
-
-      const idContato = await db('contatos').insert(data);
-
-      const contato = await db('contatos').where('id', idContato);
-
-      return contato[0];
+    createContato: async (_, { data }, context) => {
+      return await context.contatoCadastroService.createContato({ data });
     },
-    updateContato: async (_, { id, data }) => {
-      await db('contatos').where('id', id).update(data);
-      const contato = await db('contatos').where({ id });
-
-      return contato[0];
+    updateContato: async (_, { id, data }, context) => {
+      return await context.contatoCadastroService.updateContato({ id, data });
     },
-    deleteContato: async (_, { id }) => {
-      const result = await db('contatos').where('id', id).del();
-      return !!result;
+    deleteContato: async (_, { id }, context) => {
+      return await context.contatoCadastroService.deleteContato({ id });
     },
   },
 };
