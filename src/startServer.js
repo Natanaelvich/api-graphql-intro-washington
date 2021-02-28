@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, PubSub } from 'apollo-server';
 import mongoose from 'mongoose';
 
 export default function startServer({ typeDefs, resolvers }) {
@@ -10,6 +10,9 @@ export default function startServer({ typeDefs, resolvers }) {
     .then(() => console.log('connected mongo'))
     .catch((err) => console.log('error connect mongo', err));
 
-  const server = new ApolloServer({ typeDefs, resolvers });
-  server.listen().then(({ url }) => console.log(`🔥 Server started at ${url}`));
+  const pubsub = new PubSub();
+  const server = new ApolloServer({ typeDefs, resolvers, context: { pubsub } });
+  server
+    .listen(3333)
+    .then(({ url }) => console.log(`🔥 Server started at ${url}`));
 }

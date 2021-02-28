@@ -8,7 +8,7 @@ const Schema = new mongoose.Schema({
   content: {
     type: String,
   },
-  password: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'USer',
     required: true,
