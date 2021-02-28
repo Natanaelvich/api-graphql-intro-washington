@@ -11,6 +11,12 @@ export default {
   },
   Mutation: {
     createUser: async (_, { data }, { pubsub }) => {
+      const userExists = User.findOne({ email: data.email });
+
+      if (userExists) {
+        throw new Error(`user with email ${data.email} already exists`);
+      }
+
       const user = await User.create(data);
 
       pubsub.publish(USER_ADDED, {
