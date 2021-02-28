@@ -11,7 +11,16 @@ export default function startServer({ typeDefs, resolvers }) {
     .catch((err) => console.log('error connect mongo', err));
 
   const pubsub = new PubSub();
-  const server = new ApolloServer({ typeDefs, resolvers, context: { pubsub } });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: { pubsub },
+    formatError: (err) => {
+      if (err.message) {
+        return new Error(err.message);
+      }
+    },
+  });
   server
     .listen(3333)
     .then(({ url }) => console.log(`🔥 Server started at ${url}`));
