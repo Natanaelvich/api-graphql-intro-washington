@@ -19,6 +19,8 @@ export default function startServer({ typeDefs, resolvers }) {
       if (err.message) {
         return new Error(err.message);
       }
+
+      return err;
     },
   });
   server
