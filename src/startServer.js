@@ -1,20 +1,9 @@
-import { ApolloServer, PubSub } from 'apollo-server';
-import mongoose from 'mongoose';
+import { ApolloServer } from 'apollo-server';
 
 export default function startServer({ typeDefs, resolvers }) {
-  mongoose
-    .connect('mongodb://localhost:27017/graphql', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => console.log('connected mongo'))
-    .catch((err) => console.log('error connect mongo', err));
-
-  const pubsub = new PubSub();
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: { pubsub },
     formatError: (err) => {
       if (err.message) {
         return new Error(err.message);
