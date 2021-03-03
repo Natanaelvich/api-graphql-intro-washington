@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import ContatoCadastroService from './services/ContatoCadastroService';
 import ContatoListService from './services/ContatoListService';
+import GithubService from './services/GithubService';
 import UserCadastroService from './services/UserCadastroService';
 import UserListService from './services/UserListService';
 
@@ -15,6 +16,9 @@ export default function startServer({ typeDefs, resolvers }) {
 
       return err;
     },
+    dataSources: () => ({
+      githubService: GithubService,
+    }),
     context: {
       contatoCadastroService: ContatoCadastroService,
       contatoListService: ContatoListService,
