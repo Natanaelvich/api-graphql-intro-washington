@@ -1,4 +1,8 @@
 import { ApolloServer } from 'apollo-server';
+import ContatoCadastroService from './services/ContatoCadastroService';
+import ContatoListService from './services/ContatoListService';
+import UserCadastroService from './services/UserCadastroService';
+import UserListService from './services/UserListService';
 
 export default function startServer({ typeDefs, resolvers }) {
   const server = new ApolloServer({
@@ -10,6 +14,12 @@ export default function startServer({ typeDefs, resolvers }) {
       }
 
       return err;
+    },
+    context: {
+      contatoCadastroService: ContatoCadastroService,
+      contatoListService: ContatoListService,
+      userCadastroService: UserCadastroService,
+      userListService: UserListService,
     },
   });
   server
