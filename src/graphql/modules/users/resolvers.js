@@ -3,8 +3,8 @@ export default {
     users: async (_, __, context) => {
       return await context.userListService.findAll();
     },
-    user: async (_, { id }, context) =>
-      await context.userListService.findOne({ id }),
+    user: async (_, { login }, { dataSources }) =>
+      await dataSources.githubService.getUser(login),
   },
   Mutation: {
     createUser: async (_, { data }, context) => {
