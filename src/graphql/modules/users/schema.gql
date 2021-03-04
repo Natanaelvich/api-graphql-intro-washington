@@ -2,6 +2,7 @@ type User {
   _id: ID
   login: String!
   bio: String!
+  contatos : [Contato]
 }
 
 input UserInput {
