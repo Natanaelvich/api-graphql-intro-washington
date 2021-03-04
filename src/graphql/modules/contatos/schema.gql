@@ -2,13 +2,13 @@ type Contato {
   _id: ID
   nome: String!
   email: String!
-  telefone: String!
+  user_id : Int!
 }
 
 input ContatoInput {
   nome: String!
   email: String!
-  telefone: String!
+  user_id : Int!
 }
 
 type Query {
