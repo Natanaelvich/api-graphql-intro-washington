@@ -1,4 +1,9 @@
 export default {
+  User: {
+    contatos(user, _, context) {
+      return context.contatoListService.findByUser(user);
+    },
+  },
   Query: {
     users: async (_, __, context) => {
       return await context.userListService.findAll();
