@@ -9,7 +9,9 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.string('nome').notNullable();
     table.string('email').notNullable().unique();
-    table.string('telefone').notNullable();
+    table.integer('user_id').unsigned();
+
+    table.foreign('user_id').references('id').inTable('users');
   });
 };
 
