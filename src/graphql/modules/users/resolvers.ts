@@ -1,7 +1,7 @@
 export default {
   User: {
-    contatos(_, __, { dataSources, user_id }) {
-      return dataSources.contatoListService.findByUser(user_id);
+    contatos(user, __, { dataSources }) {
+      return dataSources.contatoListService.findByUser(user);
     },
   },
   Query: {
@@ -9,7 +9,7 @@ export default {
       const users = await dataSources.userListService.findAll();
       return users;
     },
-    user: async (_, { login }, { dataSourcess }) => {
+    user: async (_, { login }, { dataSources }) => {
       const user = await dataSourcess.githubService.getUser(login);
       return user;
     },
