@@ -5,6 +5,13 @@ import GithubService from './services/GithubService';
 import UserCadastroService from './services/UserCadastroService';
 import UserListService from './services/UserListService';
 
+type DataSourceProps = {
+  githubService: typeof GithubService;
+  contatoCadastroService: typeof ContatoCadastroService;
+  contatoListService: typeof ContatoListService;
+  userCadastroService: typeof UserCadastroService;
+  userListService: typeof UserListService;
+};
 export default function startServer({ typeDefs, resolvers }) {
   const server = new ApolloServer({
     typeDefs,
@@ -18,12 +25,17 @@ export default function startServer({ typeDefs, resolvers }) {
     },
     dataSources: () => ({
       githubService: GithubService,
-    }),
-    context: {
       contatoCadastroService: ContatoCadastroService,
       contatoListService: ContatoListService,
       userCadastroService: UserCadastroService,
       userListService: UserListService,
+    }),
+    context: ({ req }) => {
+      const user_id = req.headers.authorization;
+
+      return {
+        user_id,
+      };
     },
   });
   server
