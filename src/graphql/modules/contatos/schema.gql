@@ -8,7 +8,6 @@ type Contato {
 input ContatoInput {
   nome: String!
   email: String!
-  user_id : Int!
 }
 
 type Query {
