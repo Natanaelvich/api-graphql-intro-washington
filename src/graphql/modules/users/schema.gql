@@ -3,6 +3,7 @@ type User {
   login: String!
   bio: String!
   contatos : [Contato]
+  token: String!
 }
 
 input UserInput {
