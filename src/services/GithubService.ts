@@ -1,3 +1,4 @@
+import AppError from '@/errors/AppError';
 import { RESTDataSource } from 'apollo-datasource-rest';
 
 class GithubService extends RESTDataSource {
@@ -7,7 +8,15 @@ class GithubService extends RESTDataSource {
   }
 
   async getUser(login) {
-    return this.get(`users/${login}`);
+    try {
+      const user = await this.get(`users/${login}`);
+      return user;
+    } catch (error) {
+      if (error.extensions.response.status === 404) {
+        throw new AppError(`Usuário não encotrado : ${login}`);
+      }
+      throw new Error(error);
+    }
   }
 }
 export default new GithubService();
