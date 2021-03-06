@@ -10,7 +10,16 @@ export default {
       return users;
     },
     user: async (_, { login }, { dataSources }) => {
-      const user = await dataSourcess.githubService.getUser(login);
+      const user = await dataSources.githubService.getUser(login);
+      const userExists = await dataSources.userListService.findOne({
+        id: user.id,
+      });
+
+      if (!userExists) {
+        const { id, bio } = user;
+        await dataSources.userCadastroService.createUser({ id, login, bio });
+      }
+
       return user;
     },
   },
