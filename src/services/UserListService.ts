@@ -11,7 +11,7 @@ class UserListService {
   }
 
   async findOne({ id }) {
-    const user = await (await db('users').where('id', id))[0];
+    const user = await db('users').where('id', id).first();
     return user;
   }
 }
