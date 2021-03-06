@@ -1,8 +1,18 @@
+import AppError from '@/errors/AppError';
+import genereator from '@/helpers/genereator';
+
 const context = ({ req }) => {
-  const user_id = req.headers.authorization;
+  const token = req.headers.authorization;
 
   return {
-    user_id,
+    validate() {
+      try {
+        const { id } = genereator.verifyToken(token);
+        return id;
+      } catch (error) {
+        throw new AppError('No Permission');
+      }
+    },
   };
 };
 
