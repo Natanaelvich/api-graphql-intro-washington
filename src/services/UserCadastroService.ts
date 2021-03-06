@@ -5,7 +5,7 @@ class UserCadastroService {
     this.db = db;
   }
 
-  async createUser({ data }) {
+  async createUser(data) {
     const idUser = await db('users').insert(data);
 
     const user = await db('users').where('id', idUser);
