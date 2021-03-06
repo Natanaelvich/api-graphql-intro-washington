@@ -1,7 +1,10 @@
+import genereator from '@/helpers/genereator';
+
 export default {
   User: {
-    contatos(user, __, { dataSources }) {
-      return dataSources.contatoListService.findByUser(user);
+    contatos(_, __, { dataSources, validate }) {
+      const user_id = validate();
+      return dataSources.contatoListService.findByUser(user_id);
     },
   },
   Query: {
@@ -19,6 +22,8 @@ export default {
         const { id, bio } = user;
         await dataSources.userCadastroService.createUser({ id, login, bio });
       }
+
+      user.token = genereator.createToken(user.id);
 
       return user;
     },

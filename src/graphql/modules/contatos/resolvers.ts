@@ -10,7 +10,8 @@ export default {
     },
   },
   Mutation: {
-    createContato: async (_, { data }, { dataSources, user_id }) => {
+    createContato: async (_, { data }, { dataSources, validate }) => {
+      const user_id = validate();
       const contato = await dataSources.contatoCadastroService.createContato({
         data,
         user_id,
@@ -24,7 +25,8 @@ export default {
       });
       return contato;
     },
-    deleteContato: async (_, { id }, { dataSources, user_id }) => {
+    deleteContato: async (_, { id }, { dataSources, validate }) => {
+      const user_id = validate();
       const contatoDeleted = await dataSources.contatoCadastroService.deleteContato(
         { id, user_id }
       );
