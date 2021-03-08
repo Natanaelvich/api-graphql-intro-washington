@@ -1,8 +1,11 @@
 import AppError from '@/errors/AppError';
 import genereator from '@/helpers/genereator';
+import { PubSub } from 'apollo-server';
+
+const pubsub = new PubSub();
 
 const context = ({ req }) => {
-  const token = req.headers.authorization;
+  const token = req?.headers?.authorization;
 
   return {
     validate() {
@@ -13,6 +16,7 @@ const context = ({ req }) => {
         throw new AppError('No Permission');
       }
     },
+    pubsub,
   };
 };
 
