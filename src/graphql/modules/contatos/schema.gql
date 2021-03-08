@@ -20,3 +20,7 @@ type Mutation {
   updateContato(id: ID, data: ContatoInput): Contato!
   deleteContato(id: ID): Boolean
 }
+
+type Subscription {
+  contatoAdded: Contato!
+}

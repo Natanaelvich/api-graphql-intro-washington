@@ -1,3 +1,5 @@
+import { CONTATO_ADDED } from './channels';
+
 export default {
   Query: {
     contatos: async (_, __, { dataSources, user_id }) => {
@@ -10,12 +12,17 @@ export default {
     },
   },
   Mutation: {
-    createContato: async (_, { data }, { dataSources, validate }) => {
+    createContato: async (_, { data }, { dataSources, validate, pubsub }) => {
       const user_id = validate();
       const contato = await dataSources.contatoCadastroService.createContato({
         data,
         user_id,
       });
+
+      pubsub.publish(CONTATO_ADDED, {
+        contatoAdded: contato,
+      });
+
       return contato;
     },
     updateContato: async (_, { id, data }, { dataSources }) => {
@@ -31,6 +38,12 @@ export default {
         { id, user_id }
       );
       return contatoDeleted;
+    },
+  },
+
+  Subscription: {
+    contatoAdded: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(CONTATO_ADDED),
     },
   },
 };
