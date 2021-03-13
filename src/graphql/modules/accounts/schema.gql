@@ -1,0 +1,25 @@
+type Account {
+  _id: ID
+  nome: String!
+  email: String!
+}
+
+input AccountInput {
+  nome: String!
+  email: String!
+}
+
+type Query {
+  accounts: [Account!]!
+  account(id: ID): Account!
+}
+
+type Mutation {
+  createAccount(data: AccountInput): Account!
+  updateAccount(id: ID, data: AccountInput): Account!
+  deleteAccount(id: ID): Boolean
+}
+
+type Subscription {
+  accountAdded: Account!
+}
