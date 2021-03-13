@@ -1,0 +1,1 @@
+export const ACCOUNT_ADDED = 'ACCOUNT_ADDED';
