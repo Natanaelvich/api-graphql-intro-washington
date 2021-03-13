@@ -1,3 +1,5 @@
+import AccountCadastroService from '@/services/AccountCadastroService';
+import AccountListService from '@/services/AccountListService';
 import ContatoCadastroService from '@/services/ContatoCadastroService';
 import ContatoListService from '@/services/ContatoListService';
 import GithubService from '@/services/GithubService';
@@ -10,4 +12,6 @@ export default () => ({
   contatoListService: ContatoListService,
   userCadastroService: UserCadastroService,
   userListService: UserListService,
+  accountCadastroService: AccountCadastroService,
+  accountListService: AccountListService,
 });
